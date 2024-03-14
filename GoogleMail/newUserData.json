@@ -1,0 +1,9 @@
+{
+    "Gmail": {"name": "reedik",
+              "lastname": "lox", 
+              "password": "reediklox123456789"}, 
+                
+    "Twitter": {"login": "testlansoft", 
+                "password": "koppozitive123"}, 
+
+    "Gaxle": {"login": "testuserlansoft@gmail.com"}}
