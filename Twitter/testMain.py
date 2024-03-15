@@ -95,7 +95,7 @@ twitterAuth()
 if main_driver.getPageTitle() == 'Вход в X / X':
     main_driver.InputDataIntoForm('//input', getVerifyCode())
     
-#twitterPasswordChange()
+twitterPasswordChange()
 NewTwit()
 
 
