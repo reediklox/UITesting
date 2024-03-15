@@ -41,4 +41,12 @@ class JWork():
         
         return data[key]
         
+    @classmethod
+    def ChangePass(cls, path:str, password:str, key:str):
+        with open(path, 'r') as r:
+            data = json.load(r)
+            
+        data[key]['password'] = password
         
+        with open(path, 'w') as w:
+            json.dump(data, w)

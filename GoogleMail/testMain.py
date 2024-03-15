@@ -6,8 +6,8 @@ from webDriver import Driver
 import pandas as pd
 
 
-PATH_JSON = 'GoogleMail/userdata.json'
-PATH_JSON_NEW = 'GoogleMail/newUserData.json'
+PATH_JSON = 'Data/userdata.json'
+PATH_JSON_NEW = 'Data/newUserData.json'
 KEY_JSON = 'Gmail'
 PASSWORD = JWork.getData(KEY_JSON, PATH_JSON)['password']
 LOGIN = JWork.getData(KEY_JSON, PATH_JSON)["login"]
@@ -15,10 +15,8 @@ NEW_PASSWORD = JWork.getData(KEY_JSON, PATH_JSON_NEW)['password']
 
 AUTH_PATH = [   
                 '/html/body/header/div/div/div/a[2]',
-                '//*[@id="yDmH0d"]/c-wiz/div/div[2]/div/c-wiz/c-wiz/div/div[3]/div/div/c-wiz/section/div/div/div/div/div/div/header/div[3]/div/div/a',
                 '//*[@id="identifierId"]', 
-                '//*[@id="password"]/div[1]/div/div[1]/input', 
-                '//*[@id="gb"]/div[2]/div[3]/div[1]/div[2]/div/a'
+                '//*[@id="password"]/div[1]/div/div[1]/input',
             ]
 AUTH_DATA = [
                 LOGIN,
@@ -27,18 +25,11 @@ AUTH_DATA = [
 
 TABLE = {'Email': [AUTH_DATA[0]], 'Password': [AUTH_DATA[1]], 'Name/Last Name': None, 'Birth Date': None, 'Reserve Email': None}
 
-def ChangePass():
-    with open('GoogleMail/userdata.json', 'r') as r:
-        data = json.load(r)
-        
-    data['Gmail']['password'] = NEW_PASSWORD
-    
-    with open('GoogleMail/userdata.json', 'w') as w:
-        json.dump(data, w)
 
 def RunThread(url, page_name):
     if page_name == 'personal_info':
         person_driver = Driver(url)
+        person_driver.OpenLink('//*[@id="yDmH0d"]/c-wiz/div/div[2]/div/c-wiz/c-wiz/div/div[3]/div/div/c-wiz/section/div/div/div/div/div/div/header/div[3]/div/div/a')
         person_driver.Authorithation(AUTH_PATH, AUTH_DATA)
         
         person_driver.ChangeUserInfo([
@@ -56,6 +47,7 @@ def RunThread(url, page_name):
         person_driver.closeBrowser()
     elif page_name == 'security':
         sec_driver = Driver(url)
+        sec_driver.OpenLink('//*[@id="yDmH0d"]/c-wiz/div/div[2]/div/c-wiz/c-wiz/div/div[3]/div/div/c-wiz/section/div/div/div/div/div/div/header/div[3]/div/div/a')
         sec_driver.Authorithation(AUTH_PATH, AUTH_DATA)
         sec_driver.ChangePassword([
             '//*[@aria-label="Password"]',
@@ -64,7 +56,7 @@ def RunThread(url, page_name):
             '//*[@id="yDmH0d"]/c-wiz/div/div[2]/div[2]/c-wiz/div/div[4]/form/div/div[2]/div/div/button'
         ], 
             NEW_PASSWORD)
-        ChangePass()
+        JWork.ChangePass(PATH_JSON, NEW_PASSWORD, KEY_JSON)
         sec_driver.closeBrowser()
 
 
