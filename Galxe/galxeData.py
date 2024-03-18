@@ -26,3 +26,6 @@ DISCORD_LOGGER = '''let token = "MTIxODc5MTMwMTk3ODM5MDU1OA.GZPWf2.x-ENN5isRXzqW
                     login(token);'''
                     
 CAMPAIN_PATH = 'https://galxe.com/taiko/campaign/GC8TMt4fFG'
+
+TWITTER_CHALLENGE_BTN_PATHS = ['//div[contains(text(),"Follow @BuiltOnTaiko on Twitter")]', '//div[contains(text(),"Like @taikoxyz Tweet")]', '//div[contains(text(),"Retweet the Tweet")]']
+TWITTER_CHALLENGE_URL = 'https://twitter.com/intent/like?tweet_id=1767244696097866061'

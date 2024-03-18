@@ -131,14 +131,44 @@ def FollowSpaces():
                 1
             ])
 
-def CompliteCampains():
+def CompliteTwitter():
     sleep(2)
     main_driver.openBrowser(galxe.CAMPAIN_PATH)
+    sleep(2)
     
-    cookies = main_driver.getCookies()
-    url = main_driver.getUrl()
+    main_driver.OpenLink(galxe.TWITTER_CHALLENGE_BTN_PATHS[0], 0)
+    sleep(2)
+    main_driver.SwitchWindows(-1)
+    user_id = main_driver.getUrl().split('screen_name=')[-1]
+    main_driver.SwitchWindows()
     
-    campains.redirection(url, cookies)
+    main_driver.OpenLink('//span[text()="More"]', 1)
+    sleep(1)
+    
+    main_driver.OpenLink(galxe.TWITTER_CHALLENGE_BTN_PATHS[1], 0)
+    sleep(2)
+    main_driver.SwitchWindows(-1)
+    tweet_like_id = main_driver.getUrl().split('tweet_id=')[-1]
+    main_driver.SwitchWindows()
+    
+    main_driver.OpenLink(galxe.TWITTER_CHALLENGE_BTN_PATHS[2], 0)
+    sleep(2)
+    main_driver.SwitchWindows(-1)
+    retweet_tweet_id = main_driver.getUrl().split('tweet_id=')[-1]
+    main_driver.SwitchWindows()
+    
+    try:
+        campains.TwitterChallenges({
+            'Follow': user_id,
+            'Like': tweet_like_id,
+            'Retweet': retweet_tweet_id
+        })
+    except Exception:
+        print('You are complete this before!')      
+    
+    main_driver.OpenLink('//div[contains(text(), "Claim")]')
+    
+    
     
 
 options = ["--disable-blink-features=AutomationControlled"]
@@ -146,12 +176,12 @@ main_driver = Driver(galxe.PATH_GALXE, options)
 
 GalxeAuthByMail() #Done
 
-# MakeTweet() #Done
-# ConnectDiscord() #Done
-# ChangeUserName() # Done
-# FollowSpaces() # Done
+MakeTweet() #Done
+ConnectDiscord() #Done
+ChangeUserName() # Done
+FollowSpaces() # Done
 
-CompliteCampains()
+CompliteTwitter()
 
 sleep(10)
 main_driver.closeBrowser()
